@@ -1,1 +1,7 @@
 /* Stylesheet by K Wenzel, 2018 */
+#mapid {
+    height: 100vh;
+}
+.container {
+    padding: 10px;
+}
