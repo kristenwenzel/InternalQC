@@ -1,63 +1,316 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
+<head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>Confederate Monuments</title>
+    <!-- Font Awesome 5 -->
+    <script defer src="https://use.fontawesome.com/releases/v5.2.0/js/all.js" integrity="sha384-4oV5EgaV02iISL2ban6c/RmotsABqE4yZxZLcYMAdG7FAPsyHYAPpywE9PJo+Khy" crossorigin="anonymous"></script>    <!--bootstrap 4-->
+    <!-- Bootstrap 4 -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
+    <!--leaflet-->
+    <link rel="stylesheet" href="lib/leaflet.css"/>
+    <!--search engine-->
+    <link rel="stylesheet" href="css/leaflet-search.css" />
+	 <!--extra markers-->
+    <link rel="stylesheet" href="lib/leaflet-storymap/markers/leaflet.extra-markers.min.css"/>
+    <!--leaflet easy button-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+    <!--my css-->
+    <link rel="stylesheet" href="css/style.css">
+</head>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!--Leaflet CSS -->
-      <link rel="stylesheet" href="css/leaflet.css">
-    <!--my CSS File -->
-      <link rel="stylesheet" href="css/my_style.css">
-      
-    <title>Kristen Wenzel</title>
-  </head>
-  <body>
-      <nav class="navbar bg-dark navbar-dark navbar-expand">
-          <img src="images/checkmark.png" style="width: 40px" alt="checkmark">
-          <h1 class="text-warning m-2">Kristen's Internal QC Program</h1>
-      </nav>
-      
+<body>
+
+<!-- Navbar/Help/Info -->
+<header>
+    <nav	class="navbar bg-custom-darkblue navbar-dark navbar-expand-sm fixed-top" id="header1">
+        <div class="container-fluid p-1">
+            <img style="width: 20px" src="img/checkmark.png" alt="checkmark">
+            <div class="h5 font-weight-light text-white mt-2" id="appTitle">TREKK Internal QC Program</div>
+            <div class="ml-auto mr-0">
+                <button class="customMenuButton1" data-toggle="modal" data-target="#helpModal" id="buttonHelp">
+                    <div class="text-center" data-toggle="tooltip" title="Open Help">
+                        <i class="fas fa-question-circle fa-2x"></i>
+                    </div>
+                </button>
+                <button class="customMenuButton1" data-toggle="modal" data-target="#aboutModal" id="buttonAbout">
+                    <div class="text-center" data-toggle="tooltip" title="About this App">
+                        <i class="fas fa-info-circle fa-2x"></i>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Help Modal -->
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="helpModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title font-weight-bold" >Help Menu</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pl-5 pr-5">
+
+                    <div class="p-3 pb-0 pt-0"> This map is designed for interactivity. Navigation and search functionality is provided via the overlay
+                    buttons in the map panel. Scroll down to view
+                    an overview video. </div>
+
+                    <h5>Help with Map Navigation</h5>
+
+                    <div class="pl-3 pr-4">
+                        <table class="table table-sm">
+                            <thead>
+                            <tr>
+                                <th scope="col">Control</th>
+                                <th scope="col">Description</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row"> <i class="ml-3 fas fa-search"></i> </th>
+                                <td>Use this tool to search manholes by name.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"> <i class="ml-3 fas fa-sync-alt"></i> </th>
+                                <td>Use this button to reset the map to the initial view.</td>
+                            </tr>
+                            <tr>
+                                <th scope="row"> <i class="ml-3 fas fa-layer-group"></i> </th>
+                                <td>Use this menu to change basemaps and turn overlay layers on and off.</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <h5 class="mb-0">Help with the Story Map</h5>
+                    <p class="p-3 pb-0 pt-0">The story map panel can be scrolled through vertically, and includes a limited
+                    set of monuments with extra narrative information. The map panel will automatically zoom to these
+                    monuments in concert with the story panel.</p>
+
+                    <h5 class="pb-3 pt-0">Overview Video</h5>
+
+
+                    <div class="container" id="helpVideoContainer">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/bYeQoZo3vgQ?rel=0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" id="aboutModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title font-weight-bold" >About this App</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body pl-5 pr-5">
+
+                    <div class="p-3 pb-0 pt-0 mb-0"> This web app was designed and implemented by Mary Mahoney, Kristen Wenzel,
+                        and James Carney. The application relies on the Leaflet and Bootstrap JS libraries, among others, to present
+                        a responsive and interactive web application. <br><br>
+                        References: <br>
+
+                        <div class="container col-12">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="row align-middle">
+                                        <i class="ml-3 mt-1 fas fa-angle-right fa-xs"></i>
+                                        <a class="ml-3" href="https://leafletjs.com/">Leaflet</a>
+                                    </div>
+                                    <div class="row align-middle">
+                                        <i class="ml-3 mt-1 fas fa-angle-right fa-xs"></i>
+                                        <a class="ml-3" href="https://getbootstrap.com/">Bootstrap</a>
+                                    </div>
+                                    <div class="row align-middle">
+                                        <i class="ml-3 mt-1 fas fa-angle-right fa-xs"></i>
+                                        <a class="ml-3" href="https://fontawesome.com/">FontAwesome</a>
+                                    </div>
+                                    <div class="row align-middle">
+                                        <i class="ml-3 mt-1 fas fa-angle-right fa-xs"></i>
+                                        <a class="ml-3" href="https://github.com/JackDougherty/leaflet-storymap">Leaflet-Storymap</a>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="row align-middle">
+                                        <i class="ml-3 mt-1 fas fa-angle-right fa-xs"></i>
+                                        <a class="ml-3" href="https://mdbootstrap.com/">Material Design Bootstrap</a>
+                                    </div>
+                                    <div class="row align-middle">
+                                        <i class="ml-3 mt-1 fas fa-angle-right fa-xs"></i>
+                                        <a class="ml-3" href="https://github.com/coryasilva/Leaflet.ExtraMarkers">Leaflet Extra-Markers</a>
+                                    </div>
+                                    <div class="row align-middle">
+                                        <i class="ml-3 mt-1 fas fa-angle-right fa-xs"></i>
+                                        <a class="ml-3" href="https://github.com/CliffCloud/Leaflet.EasyButton">Leaflet EasyButton</a>
+                                    </div>
+                                    <div class="row align-middle">
+                                        <i class="ml-3 mt-1 fas fa-angle-right fa-xs"></i>
+                                        <a class="ml-3" href="https://jquery.com">JQuery</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="p-3 pb-0 pt-0"> For more projects or to contact one of the authors, please visit our portfolios: </div>
+                    <div class="container col-12">
+                        <div class="row">
+                            <div class="col-4">
+                                <a role="button" class="btn btn-sm btn-blue-grey customUserButton" href="https://github.com/mahonemc" target="_blank"><i class="fa fa-user mr-1"></i>Mary Mahoney</a>
+                            </div>
+                            <div class="col-4">
+                                <a role="button" class="btn btn-sm btn-blue-grey customUserButton" href="https://kristenwenzel.github.io/" target="_blank"><i class="fa fa-user mr-1"></i>Kristen Wenzel</a>
+                            </div>
+                            <div class="col-4">
+                                <a role="button" class="btn btn-sm btn-blue-grey customUserButton" href="https://thecarney.github.io/" target="_blank"><i class="fa fa-user mr-1"></i>James Carney</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="container-fluid text-dark font-weight-bold text-center font-italic pt-4">Thank you!</div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</header>
+	
 <!-- MAIN -->
 <main role="main">
+
+    <!-- Splash Modal -->
+    <div class="modal fade" id="splashModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text" id="exampleModalLabel"><strong>Confederate Monuments Explorer</strong></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Confederate monuments are polarizing relics from the past century that celebrate soldiers, military officers,
+                    or political figures from the Confederacy and the Civil War era. For many Americans, especially those in
+                    northern or western states, they may not know the extent or prevalence of these monuments. Many southerners
+                    may assume that these monuments are relatively common. This map hopes to facilitate exploration of
+                    the spatial distribution of confederate monuments in the United States.
+                </div>
+                <div class="modal-footer flex-column align-content-center">
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">Go to QC Main Page</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- MAP PAGE -->
     <div class="container-fluid fadeIn" id="mainContainer">
         <div class="row" id="rowParent">
-            <div class="col m-0 p-0">
+            <div class="col-8 m-0 p-0">
             <!-- MAP -->
-                <div class="container-fluid" id="mapid"></div>
+                <div class="container-fluid" id="map"></div>
+            </div>
+
+            <div class="col-4 pt-3 px-0" id="storyPanel">
+            <!-- STORY MAP -->
+                <div id="storyMapTitleBlock">
+                    <div class="flex-row text-center">
+                        <h4 class="font-weight-bold">Legend</h4>
+                    </div>
+                    <div class="flex-row text-center">
+                        This is where the tools would go:
+                        <div class="container-flex">
+                        <button type="button" id="manhole_file"class="btn btn-primary btn-sm">Manhole File: </button>
+                        <button type="button" id="pipe_connection_file" class="btn btn-primary btn-sm">Pipe Connection File: </button>
+                        </div>
+                    </div>
+                </div>
+                </div>
             </div>
         </div>
-    </div>
     <!-- MAP PAGE -->
+
+    <!--story map containers-->
+    <!--<div id="title" class="title-text pt-3 position-fixed">-->
+        <!--<h4>Confederate Monuments in the United States</h4>-->
+        <!--<small>Scroll <i class="fa fa-chevron-down"></i></small>-->
+    <!--</div>-->
+
+    <!--<div id="narration">-->
+        <!--<div id="contents">-->
+            <!--<div id="space-at-the-top" class="space-at-the-top"></div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--story map containers-->
 	
 	
 </main>
 <!-- MAIN -->
 		
 <!-- FOOTER -->
-<footer class="navbar footer navbar-expand mb-2 fixed-bottom" id="footer">
-    <p class="navbar-nav ml-auto text-light bg-dark font-weight-dark" id="footerText"><small> © Kristen Wenzel 2018 </small></p>
+<footer class="navbar footer bg-custom-darkblue navbar-expand-sm mb-0 fixed-bottom" id="footer">
+    <p class="navbar-nav ml-auto text-light font-weight-light" id="footerText"><small>© Kristen Wenzel | 2018</small></p>
 </footer>
 <!-- FOOTER -->
 
 
+<!-- device size tester -->
+<div id="device-size-detector">
+    <div id="xs" class="d-block d-sm-none"></div>
+    <div id="sm" class="d-none d-sm-block d-md-none"></div>
+    <div id="md" class="d-none d-md-block d-lg-none"></div>
+    <div id="lg" class="d-none d-lg-block d-xl-none"></div>
+    <div id="xl" class="d-none d-xl-block"></div>
+</div>
+<!-- device size tester -->
+
+
 <!--Jquery-->
-      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<!--Popper.js-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script type="text/javascript" src="lib/jquery-3.3.1.js"></script>
 <!--bootstap 4 scripts-->
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 <!-- material design bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
 <!-- leaflet -->
-      <script src="js/leaflet.js"></script>
+<script src="lib/leaflet.js"></script>
 <!-- leaflet search -->
+<script src="js/leaflet-search.js"></script>
 <!--leaflet easy button -->
+<script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
 <!--extra markers-->
+<script src="lib/leaflet-storymap/markers/leaflet.extra-markers.min.js"></script>
 <!--my scripts-->
-      <script src="js/main.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

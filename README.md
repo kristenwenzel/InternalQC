@@ -1,2 +1,2 @@
-# InternalQC
-Final project for Geography 778
+# G575FinalProject
+https://thecarney.github.io/G575FinalProject/
